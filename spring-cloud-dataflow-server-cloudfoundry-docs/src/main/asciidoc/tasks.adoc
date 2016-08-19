@@ -1,0 +1,63 @@
+[[tasks]]
+= Tasks
+
+Spring Cloud Data Flow's task functionality exposes new, experimental, capabilities within
+the Pivotal Cloud Foundry runtime.  It's important to note that the current underlying PCF
+capabilities are considered experimental, and therefore this functionality within Spring
+Cloud Data Flow is also considered experimental.
+
+== Version Compatibility
+
+The task functionality depends on the latest versions of PCF for runtime support.  This
+release requires PCF version 1.7.12 or higher to run tasks.
+
+== Tooling
+
+Because the task functionality is currently considered experimental within PCF, the tooling
+around it within the CF ecosystem is not complete.  In order to interact with tasks via the
+PCF command line interface (CLI), you need to install a plugin:
+link:https://github.com/cloudfoundry/v3-cli-plugin[v3-cli-plugin].  It's important to note
+that this plugin is only compatible with the PCF CLI version 6.17.0+5d0be0a-2016-04-15.
+You can read more about the functionality the plugin provides in it's README.
+
+It's also important to note that there is no Apps Manager support for tasks as of this
+release.  When running applications as tasks through Spring Cloud Data Flow, the only way
+to view them within the context of CF is via the plugin mentioned above.
+
+== Running Task Applications
+
+Running a task application within Spring Cloud Data Flow goes through a slightly different
+lifecycle than running a stream application.  Both applications need to be registered with
+the appropriate artifact coordinates.  Both need a definition created via the SCDF DSL.
+However, that's where the similarities end.
+
+With stream based applications, you "deploy" them with the intent that they run until they
+are undeployed.  A stream definition is only deployed once (it can be scaled, but only
+deployed as one instance of the stream as a whole).  However, tasks are launched.  A single
+task definition can be launched many times.  With each launch, they will start, execute,
+and shut down with PCF cleaning up the resources once the shutdown has occurred.  The
+following sections outline the process of creating, launching, destroying, and viewing tasks.
+
+=== Create a Task
+
+=== Launch a Task
+
+=== Destroy a Task
+
+=== List Tasks
+
+=== View Task Logs
+
+As previously mentioned, the v3-cli-plugin is the way to interact with tasks on PCF,
+including viewing the logs.  In order to view the logs as a task is executing use the
+following command where `<TASK_NAME>` is the name of the task you are executing:
+
+```
+cf v3-logs <TASK_NAME>
+```
+
+NOTE: Logs are only viewable through the v3-cli-plugin as the app is running.  Historic
+logs are not available.
+
+
+
